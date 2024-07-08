@@ -234,7 +234,9 @@
             meshes[0].receiveShadows = true;
             body = meshes;
 
-            animationGroups[0].start(true);
+            animationGroups[0].stop();
+
+            animationGroups[0].start(true, 1, 0, 101);
           }
         );
         // setInterval(() => {
@@ -272,7 +274,9 @@
               light1.excludedMeshes.push(meshes[i]);
             }
 
-            animationGroups[0].start(true);
+            animationGroups[0].stop();
+
+            animationGroups[0].start(true, 1, 0, 101);
             console.log(animationGroups);
 
             skelleton = meshes;
