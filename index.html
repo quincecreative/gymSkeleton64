@@ -292,7 +292,14 @@
           (meshes, particleSystem, skeleton, animationGroups) => {
             meshes[0].scaling = new BABYLON.Vector3(-150, 150, 150);
             console.log(meshes[3].material);
-            traka = meshes;
+            traka = [
+              meshes[1],
+              meshes[2],
+              meshes[5],
+              meshes[6],
+              meshes[7],
+              meshes[8],
+            ];
 
             shadowGenerator.addShadowCaster(meshes[0]);
             meshes[0].receiveShadows = true;
@@ -336,10 +343,39 @@
         // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         // skybox.material = skyboxMaterial;
         let t = 0;
+
         scene.onBeforeRenderObservable.add(() => {
           t++;
-          if (traka != null) {
+          if (traka != null && skelleton != null && body != null) {
             traka[3].material._metallicTexture.vOffset += 0.01;
+
+            if (
+              orbitCamera.position.x < 476 &&
+              orbitCamera.position.x > -480 &&
+              orbitCamera.position.z < -48
+            ) {
+              for (let i = 0; i < traka.length; i++) {
+                traka[i].renderingGroupId = 1;
+              }
+
+              for (let i = 0; i < skelleton.length; i++) {
+                skelleton[i].renderingGroupId = 3;
+              }
+              for (let i = 0; i < body.length; i++) {
+                body[i].renderingGroupId = 2;
+              }
+            } else {
+              for (let i = 0; i < traka.length; i++) {
+                traka[i].renderingGroupId = 3;
+              }
+
+              for (let i = 0; i < skelleton.length; i++) {
+                skelleton[i].renderingGroupId = 2;
+              }
+              for (let i = 0; i < body.length; i++) {
+                body[i].renderingGroupId = 1;
+              }
+            }
           }
         });
 
